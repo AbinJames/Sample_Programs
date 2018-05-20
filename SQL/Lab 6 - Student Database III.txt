@@ -1,0 +1,259 @@
+
+SQL> create table student ( rollno int primary key, name char(20) not null check(name like 'B%' or name like 'E%' or name like 'S%' or name like 'P%'), sex char(1) check(sex in ('M','F')) , dob date not null, course varchar(4) check(course in('MCA','CSE','ME')), sem varchar(2) check(sem in('S3','S4')), date_of_join date);
+
+Table created.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                    NOT NULL NUMBER(38)
+ NAME                                      NOT NULL CHAR(20)
+ SEX                                                CHAR(1)
+ DOB                                       NOT NULL DATE
+ COURSE                                             VARCHAR2(4)
+ SEM                                                VARCHAR2(2)
+ DATE_OF_JOIN                                       DATE
+
+SQL> create table marks (mid int primary key, rollno int references student, sub_code char(50) not null, marks int not null check(marks>=0 and marks <=100));
+
+Table created.
+
+SQL> desc marks;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ MID                                       NOT NULL NUMBER(38)
+ ROLLNO                                             NUMBER(38)
+ SUB_CODE                                  NOT NULL CHAR(50)
+ MARKS                                     NOT NULL NUMBER(38)
+
+SQL> insert into student values(1,'Paul','M','02-FEB-1980','MCA','S4','03-JUL-1998');
+
+1 row created.
+
+SQL> insert into student values(2,'Sara','F','03-FEB-1981','CSE','S3','03-NOV-1998');
+
+1 row created.
+
+SQL> insert into student values(10,'Eepen','M','15-JAN-1980','ME','S4','03-JUL-1998');
+
+1 row created.
+
+SQL> insert into student values(12,'Paul','M','15-MAR-1981','CSE','S3','03-NOV-1998');
+
+1 row created.
+
+SQL> insert into student values(15,'Blosom','F','20-JUL-1981','MCA','S3','03-NOV-1998');
+
+1 row created.
+
+SQL> insert into student values(23,'Sonu','F','20-JUN-1980','ME','S4','03-JUL-1998');
+
+1 row created.
+
+SQL> select * from student;
+
+    ROLLNO NAME                 S DOB       COUR SE DATE_OF_J
+---------- -------------------- - --------- ---- -- ---------
+         1 Paul                 M 02-FEB-80 MCA  S4 03-JUL-98
+         2 Sara                 F 03-FEB-81 CSE  S3 03-NOV-98
+        10 Eepen                M 15-JAN-80 ME   S4 03-JUL-98
+        12 Paul                 M 15-MAR-81 CSE  S3 03-NOV-98
+        15 Blosom               F 20-JUL-81 MCA  S3 03-NOV-98
+        23 Sonu                 F 20-JUN-80 ME   S4 03-JUL-98
+
+6 rows selected.
+
+SQL> insert into marks values(1,1,'EN010501',80);
+
+1 row created.
+
+SQL> insert into marks values(2,2,'EN010501',72);
+
+1 row created.
+
+SQL> insert into marks values(3,10,'EN010501',52);
+
+1 row created.
+
+SQL> insert into marks values(4,12,'EN010501',42);
+
+1 row created.
+
+SQL> insert into marks values(5,15,'EN010501',92);
+
+1 row created.
+
+SQL> insert into marks values(6,23,'EN010501',85);
+
+1 row created.
+
+SQL> insert into marks values(7,10,'EN010502',82);
+
+1 row created.
+
+SQL> insert into marks values(8,15,'EN010502',85);
+
+1 row created.
+
+
+SQL> insert into marks values(9,1,'EN010502',80);
+
+1 row created.
+
+SQL> insert into marks values(10,2,'EN010502',85);
+
+1 row created.
+
+SQL> insert into marks values(11,12,'EN010502',95);
+
+1 row created.
+
+SQL> insert into marks values(13,23,'EN010502',72);
+
+1 row created.
+
+SQL> select * from marks;
+
+       MID     ROLLNO SUB_CODE                                                MARKS
+---------- ---------- -------------------------------------------------- ----------
+         1          1 EN010501                                                   80
+         2          2 EN010501                                                   72
+         3         10 EN010501                                                   52
+         4         12 EN010501                                                   42
+         5         15 EN010501                                                   92
+         6         23 EN010501                                                   85
+        10          2 EN010502                                                   85
+         7         10 EN010502                                                   82
+         8         15 EN010502                                                   85
+         9          1 EN010502                                                   80
+        11         12 EN010502                                                   95
+
+       MID     ROLLNO SUB_CODE                                                MARKS
+---------- ---------- -------------------------------------------------- ----------
+        13         23 EN010502                                                   72
+
+12 rows selected.
+
+SQL> select name from student where date_of_join > '10-OCT-1990' and course='MCA';
+
+NAME
+--------------------
+Paul
+Blosom
+
+SQL> select name from student where course not in 'CSE';
+
+NAME
+--------------------
+Paul
+Eepen
+Blosom
+Sonu
+
+SQL> select name from student where name like'E_p%';
+
+NAME
+--------------------
+Eepen
+
+SQL> select marks from marks,student where name='Paul' and course='MCA' and student.rollno=marks.rollno;
+
+     MARKS
+----------
+        80
+        80
+
+SQL> select distinct s.rollno from student s, marks m where s.rollno=m.rollno;
+
+    ROLLNO
+----------
+         1
+         2
+        23
+        10
+        12
+        15
+
+6 rows selected.
+
+SQL> select name, marks from student , marks where student.rollno=23 and marks.rollno=23;
+
+NAME                      MARKS
+-------------------- ----------
+Sonu                         85
+Sonu                         72
+
+SQL> select rollno, sum(marks) from marks group by rollno;
+
+    ROLLNO SUM(MARKS)
+---------- ----------
+         1        160
+         2        157
+        23        157
+        10        134
+        12        137
+        15        177
+
+6 rows selected.
+
+SQL> select distinct name, s.rollno from student s, marks m where s.rollno=m.rollno;
+
+NAME                     ROLLNO
+-------------------- ----------
+Paul                          1
+Paul                         12
+Eepen                        10
+Blosom                       15
+Sara                          2
+Sonu                         23
+
+6 rows selected.
+
+SQL> select name, s.rollno, sex, dob, sub_code, marks from student s, marks m where s.rollno=m.rollno and marks in (select max(marks) from marks);
+
+NAME                     ROLLNO S DOB       SUB_CODE                                                MARKS
+-------------------- ---------- - --------- -------------------------------------------------- ----------
+Paul                         12 M 15-MAR-81 EN010502                                                   95
+
+SQL> select name, to_char(date_of_join, 'dd/mm/yy') "Date of Join" from student;
+
+NAME                 Date of
+-------------------- --------
+Paul                 03/07/98
+Sara                 03/11/98
+Eepen                03/07/98
+Paul                 03/11/98
+Blosom               03/11/98
+Sonu                 03/07/98
+
+6 rows selected.
+
+SQL> select name from student where date_of_join like  '%98';
+
+NAME
+--------------------
+Paul
+Sara
+Eepen
+Paul
+Blosom
+Sonu
+
+6 rows selected.
+
+SQL> select s.course ,min(marks) from student s, marks m where s.rollno=m.rollno group by s.course having min(marks) >60;
+
+COUR MIN(MARKS)
+---- ----------
+MCA          80
+
+
+SQL> select course, count(distinct s.rollno) from student s, marks m where s.rollno=m.rollno and marks>60 group by course;
+
+COUR COUNT(DISTINCTS.ROLLNO)
+---- -----------------------
+CSE                        2
+ME                         2
+MCA                        2
+
+SQL>

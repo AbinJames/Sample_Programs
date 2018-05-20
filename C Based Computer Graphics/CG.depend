@@ -1,0 +1,48 @@
+# depslib dependency file v1.0
+1519572997 source:c:\users\user\downloads\my resources\college resources\notes\s8\cg lab\cg\02_bresenhams_line_drawing.c
+	<dos.h>
+	<stdio.h>
+	<conio.h>
+	<math.h>
+	<graphics.h>
+
+1266078014 c:\program files (x86)\codeblocks\sdk\winbgim\include\graphics.h
+	<windows.h>
+	<limits.h>
+	<sstream>
+
+1519572834 source:c:\users\user\downloads\my resources\college resources\notes\s8\cg lab\cg\03_bresenhams_circle_drawing.c
+	<dos.h>
+	<stdio.h>
+	<conio.h>
+	<math.h>
+	<graphics.h>
+
+1519572856 source:c:\users\user\downloads\my resources\college resources\notes\s8\cg lab\cg\04_midpoint_circle_drawing.c
+	<dos.h>
+	<stdio.h>
+	<conio.h>
+	<math.h>
+	<graphics.h>
+
+1519573245 source:c:\users\user\downloads\my resources\college resources\notes\s8\cg lab\cg\05_house.c
+	<stdio.h>
+	<conio.h>
+	<graphics.h>
+
+1519578988 source:c:\users\user\downloads\my resources\college resources\notes\s8\cg lab\cg\08_line_clipping.c
+	<stdio.h>
+	<conio.h>
+	<graphics.h>
+
+1519587934 source:c:\users\user\downloads\my resources\college resources\notes\s8\cg lab\cg\12_polygon_clipping.c
+	<stdio.h>
+	<conio.h>
+	<graphics.h>
+
+1519589203 source:c:\users\user\downloads\my resources\college resources\notes\s8\cg lab\cg\13_solar_system.c
+	<stdio.h>
+	<conio.h>
+	<graphics.h>
+	<math.h>
+

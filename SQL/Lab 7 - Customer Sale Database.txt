@@ -1,0 +1,364 @@
+SQL> create table customer (cust_id int primary key, cust_name varchar(10) not null);
+
+Table created.
+
+SQL> create table item (item_id int primary key, item_name varchar(10) not null, price float not null check(price>0));
+
+Table created.
+
+SQL> create table sale (bill_no int primary key, bill_date date not null, cust_id int references customer, item_id int references item, qty_sold int check(qty_sold>=0));
+
+Table created.
+
+SQL> desc customer;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUST_ID                                   NOT NULL NUMBER(38)
+ CUST_NAME                                 NOT NULL VARCHAR2(10)
+
+SQL> desc item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ITEM_ID                                   NOT NULL NUMBER(38)
+ ITEM_NAME                                 NOT NULL VARCHAR2(10)
+ PRICE                                     NOT NULL FLOAT(126)
+
+SQL> desc sale;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BILL_NO                                   NOT NULL NUMBER(38)
+ BILL_DATE                                 NOT NULL DATE
+ CUST_ID                                            NUMBER(38)
+ ITEM_ID                                            NUMBER(38)
+ QTY_SOLD                                           NUMBER(38)
+
+
+
+
+SQL> insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name');
+Enter value for cust_id: 1
+Enter value for cust_name: Abin
+old   1: insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name')
+new   1: insert into customer (cust_id, cust_name) values (1, 'Abin')
+
+1 row created.
+
+
+SQL> insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name');
+Enter value for cust_id: 2
+Enter value for cust_name: Anand
+old   1: insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name')
+new   1: insert into customer (cust_id, cust_name) values (2, 'Anand')
+
+1 row created.
+
+SQL> insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name');
+Enter value for cust_id: 3
+Enter value for cust_name: Alan
+old   1: insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name')
+new   1: insert into customer (cust_id, cust_name) values (3, 'Alan')
+
+1 row created.
+
+SQL> insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name');
+Enter value for cust_id: 4
+Enter value for cust_name: Amalu
+old   1: insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name')
+new   1: insert into customer (cust_id, cust_name) values (4, 'Amalu')
+
+1 row created.
+
+SQL> insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name');
+Enter value for cust_id: 5
+Enter value for cust_name: Chippy
+old   1: insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name')
+new   1: insert into customer (cust_id, cust_name) values (5, 'Chippy')
+
+1 row created.
+
+SQL> insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name');
+Enter value for cust_id: 6
+Enter value for cust_name: David
+old   1: insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name')
+new   1: insert into customer (cust_id, cust_name) values (6, 'David')
+
+1 row created.
+
+SQL> insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name');
+Enter value for cust_id: 7
+Enter value for cust_name: Paul
+old   1: insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name')
+new   1: insert into customer (cust_id, cust_name) values (7, 'Paul')
+
+1 row created.
+
+SQL> insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name');
+Enter value for cust_id: 8
+Enter value for cust_name: Sonu
+old   1: insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name')
+new   1: insert into customer (cust_id, cust_name) values (8, 'Sonu')
+
+1 row created.
+
+SQL> insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name');
+Enter value for cust_id: 9
+Enter value for cust_name: Arun
+old   1: insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name')
+new   1: insert into customer (cust_id, cust_name) values (9, 'Arun')
+
+1 row created.
+
+SQL> insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name');
+Enter value for cust_id: 10
+Enter value for cust_name: Ajin
+old   1: insert into customer (cust_id, cust_name) values (&cust_id, '&cust_name')
+new   1: insert into customer (cust_id, cust_name) values (10, 'Ajin')
+
+1 row created.
+
+SQL> select * from customer;
+
+   CUST_ID CUST_NAME
+---------- ----------
+         1 Abin
+         2 Anand
+         3 Alan
+         4 Amalu
+         5 Chippy
+         6 David
+         7 Paul
+         8 Sonu
+         9 Arun
+        10 Ajin
+
+10 rows selected.
+
+SQL> insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price);
+Enter value for item_id: 1
+Enter value for item_name: Pen
+Enter value for price: 3
+old   1: insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price)
+new   1: insert into item (item_id, item_name, price) values (1, 'Pen', 3)
+
+1 row created.
+
+SQL> insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price);
+Enter value for item_id: 2
+Enter value for item_name: Pencil
+Enter value for price: 1
+old   1: insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price)
+new   1: insert into item (item_id, item_name, price) values (2, 'Pencil', 1)
+
+1 row created.
+
+SQL> insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price);
+Enter value for item_id: 3
+Enter value for item_name: Paper
+Enter value for price: 0.5
+old   1: insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price)
+new   1: insert into item (item_id, item_name, price) values (3, 'Paper', 0.5)
+
+1 row created.
+
+SQL> insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price);
+Enter value for item_id: 4
+Enter value for item_name: Eraser
+Enter value for price: 4.5
+old   1: insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price)
+new   1: insert into item (item_id, item_name, price) values (4, 'Eraser', 4.5)
+
+1 row created.
+
+SQL> insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price);
+Enter value for item_id: 5
+Enter value for item_name: Notebook
+Enter value for price: 40
+old   1: insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price)
+new   1: insert into item (item_id, item_name, price) values (5, 'Notebook', 40)
+
+1 row created.
+
+SQL> insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price);
+Enter value for item_id: 6
+Enter value for item_name: BME text
+Enter value for price: 210
+old   1: insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price)
+new   1: insert into item (item_id, item_name, price) values (6, 'BME text', 210)
+
+1 row created.
+
+SQL> insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price);
+Enter value for item_id: 7
+Enter value for item_name: Drafter
+Enter value for price: 800
+old   1: insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price)
+new   1: insert into item (item_id, item_name, price) values (7, 'Drafter', 800)
+
+1 row created.
+
+SQL> insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price);
+Enter value for item_id: 8
+Enter value for item_name: Calculator
+Enter value for price: 750
+old   1: insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price)
+new   1: insert into item (item_id, item_name, price) values (8, 'Calculator', 750)
+
+1 row created.
+
+SQL> insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price);
+Enter value for item_id: 9
+Enter value for item_name: File
+Enter value for price: 10
+old   1: insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price)
+new   1: insert into item (item_id, item_name, price) values (9, 'File', 10)
+
+1 row created.
+
+SQL> insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price);
+Enter value for item_id: 10
+Enter value for item_name: Scale
+Enter value for price: 5
+old   1: insert into item (item_id, item_name, price) values (&item_id, '&item_name', &price)
+new   1: insert into item (item_id, item_name, price) values (10, 'Scale', 5)
+
+1 row created.
+
+SQL> select * from item;
+
+   ITEM_ID ITEM_NAME       PRICE
+---------- ---------- ----------
+         1 Pen                 3
+         2 Pencil              1
+         3 Paper              .5
+         4 Eraser            4.5
+         5 Notebook           40
+         6 BME text          210
+         7 Drafter           800
+         8 Calculator        750
+         9 File               10
+        10 Scale               5
+
+10 rows selected.
+
+SQL> insert into sale values (1, '01-SEP-16', 1, 2, 3);
+
+1 row created.
+
+SQL> insert into sale values (2, '28-AUG-16', 4, 7, 1);
+
+1 row created.
+
+SQL> insert into sale values (3, '15-AUG-16', 2, 7, 1);
+
+1 row created.
+
+SQL> insert into sale values (4, '01-SEP-16', 5, 5, 3);
+
+1 row created.
+
+SQL> insert into sale values (5, '25-AUG-16', 9, 1, 5);
+
+1 row created.
+
+SQL> insert into sale values (6, '01-SEP-16', 9, 2, 5);
+
+1 row created.
+
+SQL> insert into sale values (7, '01-SEP-16', 10, 2, 5);
+
+1 row created.
+
+SQL> insert into sale values (8, '01-AUG-16', 5, 2, 5);
+
+1 row created.
+
+SQL> insert into sale values (9, '01-SEP-16', 2, 10, 2);
+
+1 row created.
+
+SQL> insert into sale values (10, '01-SEP-16', 6, 10, 2);
+
+1 row created.
+
+SQL> select * from sale;
+
+   BILL_NO BILL_DATE    CUST_ID    ITEM_ID   QTY_SOLD
+---------- --------- ---------- ---------- ----------
+         1 01-SEP-16          1          2          3
+         2 28-AUG-16          4          7          1
+         3 15-AUG-16          2          7          1
+         4 01-SEP-16          5          5          3
+         5 25-AUG-16          9          1          5
+         6 01-SEP-16          9          2          5
+         7 01-SEP-16         10          2          5
+         8 01-AUG-16          5          2          5
+         9 01-SEP-16          2         10          2
+        10 01-SEP-16          6         10          2
+
+10 rows selected.
+
+SQL> select bill_no, bill_date, c.cust_id, i.item_id, qty_sold, cust_name from sale s, customer c, item i where bill_date in to_char(sysdate) and s.cust_id=c.cust_id and s.item_id=i.item_id;
+
+   BILL_NO BILL_DATE    CUST_ID    ITEM_ID   QTY_SOLD CUST_NAME
+---------- --------- ---------- ---------- ---------- ----------
+         1 01-SEP-16          1          2          3 Abin
+         9 01-SEP-16          2         10          2 Anand
+         4 01-SEP-16          5          5          3 Chippy
+        10 01-SEP-16          6         10          2 David
+         6 01-SEP-16          9          2          5 Arun
+         7 01-SEP-16         10          2          5 Ajin
+
+6 rows selected.
+
+SQL> select c.cust_id, cust_name from customer c, item i, sale s where s.cust_id=c.cust_id and s.item_id=i.item_id and price>200;
+
+   CUST_ID CUST_NAME
+---------- ----------
+         2 Anand
+         4 Amalu
+
+SQL> select bill_no, qty_sold, price, price*qty_sold "Total" from sale s, item i where i.item_id=s.item_id;
+
+   BILL_NO   QTY_SOLD      PRICE      Total
+---------- ---------- ---------- ----------
+         5          5          3         15
+         8          5          1          5
+         7          5          1          5
+         6          5          1          5
+         1          3          1          3
+         4          3         40        120
+         3          1        800        800
+         2          1        800        800
+        10          2          5         10
+         9          2          5         10
+
+10 rows selected.
+
+SQL> select c.cust_id, count(c.cust_id) "Total no of products" from customer c, sale s where c.cust_id=s.cust_id group by c.cust_id;
+
+   CUST_ID Total no of products
+---------- --------------------
+         1                    1
+         6                    1
+         2                    2
+         4                    1
+         5                    2
+         9                    2
+        10                    1
+
+7 rows selected.
+
+SQL> select item_name from item i, customer c, sale s where s.cust_id=c.cust_id and s.item_id=i.item_id and c.cust_id=5;
+
+ITEM_NAME
+----------
+Pencil
+Notebook
+
+SQL> select distinct i.item_id, item_name, price from item i, sale s where s.item_id=i.item_id and bill_date in to_char(sysdate);
+
+   ITEM_ID ITEM_NAME       PRICE
+---------- ---------- ----------
+        10 Scale               5
+         2 Pencil              1
+         5 Notebook           40

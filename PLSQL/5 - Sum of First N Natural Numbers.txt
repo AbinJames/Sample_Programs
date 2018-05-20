@@ -1,0 +1,21 @@
+Aim
+Write a PL/SQL program to find sum of first n natural numbers
+
+Program
+DECLARE
+n number;
+s number := 0;
+BEGIN
+n := &n;
+FOR num IN 1..n LOOP
+	s := s + num;
+END LOOP;
+dbms_output.put_line('Sum : '||s);
+END;
+/
+
+Output
+Enter value for n: 5
+old   5: n := &n;
+new   5: n := 5;
+Sum : 15

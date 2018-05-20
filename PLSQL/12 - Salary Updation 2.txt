@@ -1,0 +1,36 @@
+Aim
+Update the salary of all the employees by 20%. If total salary>1,00,000, then rollback, else commit.
+
+Program
+DECLARE
+s float;
+BEGIN
+update income set salary = salary +0.2*salary;
+SELECT sum(salary) INTO s FROM income;
+IF s>100000 THEN
+rollback;
+ELSE
+commit;
+END IF;
+END;
+/
+
+Output 
+
+select * from income;
+
+ENAME          SALARY
+---------- ----------
+Abin            50000
+Anand           12000
+Sindhu          9000
+
+select * from income;
+
+ENAME          SALARY
+---------- ----------
+Abin            60000
+Anand           14400
+Sindhu          10800
+
+SQL>

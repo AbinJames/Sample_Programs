@@ -1,0 +1,23 @@
+Aim
+Write a PL/SQL program to generate the following sequence: 1, 4, 9, 16, 25,….
+
+Program
+DECLARE
+n number;
+BEGIN
+n := &n;
+FOR i IN 1..n LOOP
+	dbms_output.put_line(i*i);
+END LOOP;
+END;
+/
+
+Output
+Enter value for n: 5
+old   4: n := &n;
+new   4: n := 5;
+1
+4
+9
+16
+25

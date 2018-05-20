@@ -1,0 +1,7 @@
+B : Start : A
+A : Input something : C
+C : Is input > 10?
+   D:Yes
+   E:No
+E : print 'More than 10' : D
+D : Stop 

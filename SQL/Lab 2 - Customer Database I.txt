@@ -1,0 +1,177 @@
+SQL> create table customer (customerid int primary key,name varchar(20) not null,branch varchar(20) not null,accno int not null,balance float not null check (balance >= 500));
+
+Table created.
+
+SQL> desc customer;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUSTOMERID                                NOT NULL NUMBER(38)
+ NAME                                      NOT NULL VARCHAR2(20)
+ BRANCH                                    NOT NULL VARCHAR2(20)
+ ACCNO                                     NOT NULL NUMBER(38)
+ BALANCE                                   NOT NULL FLOAT(126)
+
+SQL> insert into customer values (1,'Abin','Malappuram',6792,20000);
+
+1 row created.
+
+SQL> insert into customer values (2,'Anand','Kottayam',6995,12345);
+
+1 row created.
+
+SQL> insert into customer values (3,'Kevin','Kochi',6789,15000);
+
+1 row created.
+
+SQL> insert into customer values (4,'David','Mumbai',6232,50000);
+
+1 row created.
+
+SQL> insert into customer values (5,'Aleesha','Kottayam',6232,30000);
+
+1 row created.
+
+SQL> insert into customer values (6,'Alan','Kottayam',6232,2121);
+
+1 row created.
+
+SQL> insert into customer values (7,'Ashish','Delhi',6232,2500);
+
+1 row created.
+
+SQL> select * from customer;
+
+CUSTOMERID NAME                 BRANCH                    ACCNO    BALANCE
+---------- -------------------- -------------------- ---------- ----------
+         1 Abin                 Malappuram                 6792      20000
+         2 Anand                Kottayam                   6995      12345
+         3 Kevin                Kochi                      6789      15000
+         4 David                Mumbai                     6232      50000
+         5 Aleesha              Kottayam                   6232      30000
+         6 Alan                 Kottayam                   6232       2121
+         7 Ashish               Delhi                      6232       2500
+
+7 rows selected.
+
+SQL> select * from customer where balance between 2000 and 3000;
+
+CUSTOMERID NAME                 BRANCH                    ACCNO    BALANCE
+---------- -------------------- -------------------- ---------- ----------
+         6 Alan                 Kottayam                   6232       2121
+         7 Ashish               Delhi                      6232       2500
+
+SQL> select distinct branch from customer;
+
+BRANCH
+--------------------
+Malappuram
+Kottayam
+Delhi
+Mumbai
+Kochi
+
+SQL> select * from customer where branch='Kottayam' and balance>5000;
+
+CUSTOMERID NAME                 BRANCH                    ACCNO    BALANCE
+---------- -------------------- -------------------- ---------- ----------
+         2 Anand                Kottayam                   6995      12345
+         5 Aleesha              Kottayam                   6232      30000
+
+SQL> select * from customer where name like 'A%';
+
+CUSTOMERID NAME                 BRANCH                    ACCNO    BALANCE
+---------- -------------------- -------------------- ---------- ----------
+         1 Abin                 Malappuram                 6792      20000
+         2 Anand                Kottayam                   6995      12345
+         5 Aleesha              Kottayam                   6232      30000
+         6 Alan                 Kottayam                   6232       2121
+         7 Ashish               Delhi                      6232       2500
+
+SQL> select  distinct branch "City" from customer;
+
+City
+--------------------
+Malappuram
+Kottayam
+Delhi
+Mumbai
+Kochi
+
+SQL> select sum (balance) "total balance" from customer;
+
+total balance
+-------------
+       131966
+
+SQL> select avg (balance) "average balance" from customer;
+
+average balance
+---------------
+     18852.2857
+
+SQL> select max (balance) "maximum balance" from customer;
+
+maximum balance
+---------------
+          50000
+
+SQL> select min (balance) "minimum balance" from customer;
+
+minimum balance
+---------------
+           2121
+
+SQL> commit;
+
+Commit complete.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

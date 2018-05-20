@@ -1,0 +1,29 @@
+Aim
+Write a PL/SQL program to find the area of a circle and a square.
+
+Program
+DECLARE
+radius number(6,2);
+side number(6,2);
+pi CONSTANT number (3,2) := 3.14;
+areac number(6,2);
+areas number(6,2);
+BEGIN
+radius := &radius;
+areac := pi*radius*radius;
+side := &side;
+areas := side*side;
+dbms_output.put_line('Area of Circle : '||areac);
+dbms_output.put_line('Area of Square : '||areas);
+END;
+/
+
+Output
+Enter value for radius: 2
+old   8: radius := &radius;
+new   8: radius := 2;
+Enter value for side: 3
+old  10: side := &side;
+new  10: side := 3;
+Area of Circle : 12.56
+Area of Square : 9

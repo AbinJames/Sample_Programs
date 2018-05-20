@@ -1,0 +1,32 @@
+Program
+create or replace function evensum (num in NUMBER) return int
+IS 
+s int:=0;
+inc int:=2;
+BEGIN
+FOR i in 1..num LOOP
+	s:=s+inc;
+	inc:=inc+2;
+END LOOP; 
+return s;
+End;
+/
+DECLARE
+num int;
+t int;
+
+BEGIN
+num := &num;
+t:=evensum(num);
+dbms_output.put_line('Sum : '||t);
+END;
+/
+
+output
+SQL> @"Z:\S5_abin J\Lab\PLSQL\PLSQL Programs\18 - Sum of n even numbers.sql"
+Enter value for num: 4
+old   6: num := &num;
+new   6: num := 4;
+Sum : 20
+
+PL/SQL procedure successfully completed.

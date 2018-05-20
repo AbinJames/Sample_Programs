@@ -1,0 +1,31 @@
+Aim
+An employee is given 25% increase in salary, if salary is above Rs.25000 and 20% increase in salary if his salary is above Rs.30000.  Write a PL/SQL program to calculate the new salary and change in salary.
+
+Program
+DECLARE
+sal number(7,2);
+newsal number(7,2);
+change number(7,2);
+BEGIN
+sal := &sal;
+IF sal>25000 THEN
+	newsal := sal + (0.25*sal);
+	change := newsal-sal;
+	dbms_output.put_line('New salary : '||newsal);
+	dbms_output.put_line('Change in salary : '||change);
+ELSIF sal>30000 THEN
+	newsal := sal + (0.20*sal);
+	change := newsal-sal;
+	dbms_output.put_line('New salary : '||newsal);
+	dbms_output.put_line('Change in salary : '||change);
+ELSE
+dbms_output.put_line('No change in salary');
+END IF;
+END;
+/
+Output
+Enter value for sal: 26000
+old   6: sal := &sal;
+new   6: sal := 26000;
+New salary : 32500
+Change in salary : 6500

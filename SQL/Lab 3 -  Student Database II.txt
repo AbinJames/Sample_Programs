@@ -1,0 +1,440 @@
+SQL> create table student (rollno int primary key, name varchar(10) not null, mark1 float not null check (mark1<=100),mark2 float not null check (mark2<=100), mark3 float not null check (mark3<=100), place varchar(20) not null);
+
+Table created.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                    NOT NULL NUMBER(38)
+ NAME                                      NOT NULL VARCHAR2(10)
+ MARK1                                     NOT NULL FLOAT(126)
+ MARK2                                     NOT NULL FLOAT(126)
+ MARK3                                     NOT NULL FLOAT(126)
+ PLACE                                     NOT NULL VARCHAR2(20)
+
+SQL> insert into student values (1,'Abin',90,95,85,'Malappuram');
+
+1 row created.
+
+SQL> insert into student values (2,'Sam',60,65,70,'Trivandrum');
+
+1 row created.
+
+SQL> insert into student values (3,'Anand',72,82,92,'Kottayam');
+
+1 row created.
+
+SQL> insert into student values (4,'Aashiq',72,82,92,'Kollam');
+
+1 row created.
+
+SQL> insert into student values (5,'Amalu',72,82,92,'Kottayam');
+
+1 row created.
+
+SQL> insert into student values (6,'Chippy',85,95,50,'Kollam');
+
+1 row created.
+
+SQL> select * from student;
+
+    ROLLNO NAME            MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+         1 Abin               90         95         85 Malappuram
+         2 Sam                60         65         70 Trivandrum
+         3 Anand              72         82         92 Kottayam
+         4 Aashiq             72         82         92 Kollam
+         5 Amalu              72         82         92 Kottayam
+         6 Chippy             85         95         50 Kollam
+
+6 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from student where mark3>80;
+
+    ROLLNO NAME            MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+         1 Abin               90         95         85 Malappuram
+         3 Anand              72         82         92 Kottayam
+         4 Aashiq             72         82         92 Kollam
+         5 Amalu              72         82         92 Kottayam
+
+SQL> select name from student where name like '_a%';
+
+NAME
+----------
+Sam
+Aashiq
+
+SQL> delete from student where place ='Kollam';
+
+2 rows deleted.
+
+SQL> select * from student;
+
+    ROLLNO NAME            MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+         1 Abin               90         95         85 Malappuram
+         2 Sam                60         65         70 Trivandrum
+         3 Anand              72         82         92 Kottayam
+         5 Amalu              72         82         92 Kottayam
+
+SQL> alter table student add (tele_no char(10));
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                    NOT NULL NUMBER(38)
+ NAME                                      NOT NULL VARCHAR2(10)
+ MARK1                                     NOT NULL FLOAT(126)
+ MARK2                                     NOT NULL FLOAT(126)
+ MARK3                                     NOT NULL FLOAT(126)
+ PLACE                                     NOT NULL VARCHAR2(20)
+ TELE_NO                                            CHAR(10)
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select count(distinct name) from student;
+
+COUNT(DISTINCTNAME)
+-------------------
+                  4
+
+SQL> select rollno, name from student where place not in 'Trivandrum';
+
+    ROLLNO NAME
+---------- ----------
+         1 Abin
+         3 Anand
+         5 Amalu
+
+
+SQL> select * from student where  mark1 between 60 and 80 and mark2 between 60 and 80 and mark3 between 60 and 80;
+
+    ROLLNO NAME            MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+TELE_NO
+----------
+         2 Sam                60         65         70 Trivandrum
+
+
+
+SQL> select * from student order by name;
+
+    ROLLNO NAME            MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+TELE_NO
+----------
+         1 Abin               90         95         85 Malappuram
+
+
+         5 Amalu              72         82         92 Kottayam
+
+
+         3 Anand              72         82         92 Kottayam
+
+
+
+    ROLLNO NAME            MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+TELE_NO
+----------
+         2 Sam                60         65         70 Trivandrum
+
+
+
+SQL> select name,mark1,mark2,mark3,(mark1+mark2+mark3) "Total Mark" from student;
+
+NAME            MARK1      MARK2      MARK3 Total Mark
+---------- ---------- ---------- ---------- ----------
+Abin               90         95         85        270
+Sam                60         65         70        195
+Anand              72         82         92        246
+Amalu              72         82         92        246
+
+SQL> select rollno,name,(mark1+mark2+mark3) "Total Mark" from student where ((mark1+mark2+mark3)/3)>=80;
+
+    ROLLNO NAME       Total Mark
+---------- ---------- ----------
+         1 Abin              270
+         3 Anand             246
+         5 Amalu             246
+
+SQL> commit;
+
+Commit complete.
+
+SQL> alter table student add (age int, department varchar(3));
+
+Table altered.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> update student set age = 26 where rollno = 1;
+
+1 row updated.
+
+SQL> update student set age = 23 where rollno = 2;
+
+1 row updated.
+
+SQL> update student set age = 25 where rollno = 3;
+
+1 row updated.
+
+SQL> update student set age = 25 where rollno = 5;
+
+1 row updated.
+
+SQL> update student set department='CS' where rollno = 1;
+
+1 row updated.
+
+SQL> update student set department='CS' where rollno = 2;
+
+1 row updated.
+
+SQL> update student set department='ME' where rollno = 3;
+
+1 row updated.
+
+SQL> update student set department='ME' where rollno = 5;
+
+1 row updated.
+
+SQL> select * from student;
+
+    ROLLNO NAME            MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+TELE_NO           AGE DEP
+---------- ---------- ---
+         1 Abin               90         95         85 Malappuram
+                   26 CS
+
+         2 Sam                60         65         70 Trivandrum
+                   23 CS
+
+         3 Anand              72         82         92 Kottayam
+                   25 ME
+
+
+    ROLLNO NAME            MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+TELE_NO           AGE DEP
+---------- ---------- ---
+         5 Amalu              72         82         92 Kottayam
+                   25 ME
+
+
+SQL> insert into student values (12,'Ashish',60,65,70,'Malappuram',NULL,25,'EC');
+
+1 row created.
+
+SQL> select * from student;
+
+    ROLLNO NAME            MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+TELE_NO           AGE DEP
+---------- ---------- ---
+         1 Abin               90         95         85 Malappuram
+                   26 CS
+
+         2 Sam                60         65         70 Trivandrum
+                   23 CS
+
+         3 Anand              72         82         92 Kottayam
+                   25 ME
+
+
+    ROLLNO NAME            MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+TELE_NO           AGE DEP
+---------- ---------- ---
+        12 Ashish             60         65         70 Malappuram
+                   25 EC
+
+         5 Amalu              72         82         92 Kottayam
+                   25 ME
+
+
+SQL> update student set age = 23 where rollno = 12;
+
+1 row updated.
+
+SQL> select * from student;
+
+    ROLLNO NAME            MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+TELE_NO           AGE DEP
+---------- ---------- ---
+         1 Abin               90         95         85 Malappuram
+                   26 CS
+
+         2 Sam                60         65         70 Trivandrum
+                   23 CS
+
+         3 Anand              72         82         92 Kottayam
+                   25 ME
+
+
+    ROLLNO NAME            MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+TELE_NO           AGE DEP
+---------- ---------- ---
+        12 Ashish             60         65         70 Malappuram
+                   23 EC
+
+         5 Amalu              72         82         92 Kottayam
+                   25 ME
+
+
+SQL> select * from student where department ='CS';
+
+    ROLLNO NAME            MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+TELE_NO           AGE DEP
+---------- ---------- ---
+         1 Abin               90         95         85 Malappuram
+                   26 CS
+
+         2 Sam                60         65         70 Trivandrum
+                   23 CS
+
+
+SQL> delete from student where age<25;
+
+2 rows deleted.
+
+SQL> select * from student;
+
+    ROLLNO NAME            MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+TELE_NO           AGE DEP
+---------- ---------- ---
+         1 Abin               90         95         85 Malappuram
+                   26 CS
+
+         3 Anand              72         82         92 Kottayam
+                   25 ME
+
+         5 Amalu              72         82         92 Kottayam
+                   25 ME
+
+
+SQL> select rollno, name from student order by age desc;
+
+    ROLLNO NAME
+---------- ----------
+         1 Abin
+         5 Amalu
+         3 Anand
+
+SQL> alter table student rename column name to name_of_student;
+
+Table altered.
+
+SQL> alter table student rename column rollno to student_ID;
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENT_ID                                NOT NULL NUMBER(38)
+ NAME_OF_STUDENT                           NOT NULL VARCHAR2(10)
+ MARK1                                     NOT NULL FLOAT(126)
+ MARK2                                     NOT NULL FLOAT(126)
+ MARK3                                     NOT NULL FLOAT(126)
+ PLACE                                     NOT NULL VARCHAR2(20)
+ TELE_NO                                            CHAR(10)
+ AGE                                                NUMBER(38)
+ DEPARTMENT                                         VARCHAR2(3)
+
+SQL> select * from student;
+
+STUDENT_ID NAME_OF_ST      MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+TELE_NO           AGE DEP
+---------- ---------- ---
+         1 Abin               90         95         85 Malappuram
+                   26 CS
+
+         3 Anand              72         82         92 Kottayam
+                   25 ME
+
+         5 Amalu              72         82         92 Kottayam
+                   25 ME
+
+
+SQL> select * from student where place = 'Trivandrum' or place='Kottayam';
+
+STUDENT_ID NAME_OF_ST      MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+TELE_NO           AGE DEP
+---------- ---------- ---
+         3 Anand              72         82         92 Kottayam
+                   25 ME
+
+         5 Amalu              72         82         92 Kottayam
+                   25 ME
+
+
+SQL> select * from student order by name_of_student desc;
+
+STUDENT_ID NAME_OF_ST      MARK1      MARK2      MARK3 PLACE
+---------- ---------- ---------- ---------- ---------- --------------------
+TELE_NO           AGE DEP
+---------- ---------- ---
+         3 Anand              72         82         92 Kottayam
+                   25 ME
+
+         5 Amalu              72         82         92 Kottayam
+                   25 ME
+
+         1 Abin               90         95         85 Malappuram
+                   26 CS
+
+
+
+SQL> select department from student group by department;
+
+DEP
+---
+CS
+ME
+
+SQL> select count (department) from student group by department;
+
+COUNT(DEPARTMENT)
+-----------------
+                1
+                2
+
+SQL> select department, count (department) from student group by department;
+
+DEP COUNT(DEPARTMENT)
+--- -----------------
+CS                  1
+ME                  2
+
+SQL> select department, count (department) ,avg (mark1),avg(mark2),avg(mark3) from student group by department;
+
+DEP COUNT(DEPARTMENT) AVG(MARK1) AVG(MARK2) AVG(MARK3)
+--- ----------------- ---------- ---------- ----------
+CS                  1         90         95         85
+ME                  2         72         82         92
+
+SQL> commit;
+
+Commit complete.
+
+SQL>

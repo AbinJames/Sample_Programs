@@ -1,0 +1,59 @@
+SQL> create table student1 (rollno int primary key, name varchar(10), mark float);
+
+Table created.
+s
+SQL> create sequence sq1 increment by 1 start with 101 minvalue 101 maxvalue 200 cycle;
+
+Sequence created.
+
+SQL> select sq1.nextval from dual;
+
+   NEXTVAL
+----------
+       101
+
+SQL> select sq1.currval from dual;
+
+   CURRVAL
+----------
+       101
+
+SQL> alter sequence sq1 increment by 2;
+
+Sequence altered.
+
+SQL> select sq1.nextval from dual;
+
+   NEXTVAL
+----------
+       103
+
+SQL> insert into student1 values (sq1.nextval,'Abin',80);
+
+1 row created.
+
+SQL> insert into student1 (rollno, name, mark) values (sq1.nextval, '&name',&mark);
+Enter value for name: Alan
+Enter value for mark: 89
+old   1: insert into student1 (rollno, name, mark) values (sq1.nextval, '&name',&mark)
+new   1: insert into student1 (rollno, name, mark) values (sq1.nextval, 'Alan',89)
+
+1 row created.
+
+SQL> insert into student1 (rollno, name, mark) values (sq1.nextval, '&name',&mark);
+Enter value for name: Anand
+Enter value for mark: 90
+old   1: insert into student1 (rollno, name, mark) values (sq1.nextval, '&name',&mark)
+new   1: insert into student1 (rollno, name, mark) values (sq1.nextval, 'Anand',90)
+
+1 row created.
+
+SQL> select * from student1;
+
+    ROLLNO NAME             MARK
+---------- ---------- ----------
+       105 Abin               80
+       107 Alan               89
+       109 Anand              90
+
+SQL>

@@ -1,0 +1,189 @@
+SQL> create table staff (staff_name varchar(20) not null, staff_id varchar(4) primary key, department varchar(3) not null, age int not null check(age between 25 and 75));
+
+Table created.
+
+SQL> desc staff;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STAFF_NAME                                NOT NULL VARCHAR2(20)
+ STAFF_ID                                  NOT NULL VARCHAR2(4)
+ DEPARTMENT                                NOT NULL VARCHAR2(3)
+ AGE                                       NOT NULL NUMBER(38)
+
+SQL> insert into staff values ('Arun','A101','CS',30);
+
+1 row created.
+
+SQL> insert into staff values ('Ajesh','A201','IT',50);
+
+1 row created.
+
+SQL> insert into staff values ('Anil','A403','EC',45);
+
+1 row created.
+
+SQL> insert into staff values ('Sunil','A901','EE',58);
+
+1 row created.
+
+SQL> insert into staff values ('Aji','A501','CS',34);
+
+1 row created.
+
+SQL> insert into staff values ('Harish','A106','ME',33);
+
+1 row created.
+
+
+SQL> select * from staff;
+
+STAFF_NAME           STAF DEP        AGE
+-------------------- ---- --- ----------
+Arun                 A101 CS          30
+Ajesh                A201 IT          50
+Anil                 A403 EC          45
+Sunil                A901 EE          58
+Aji                  A501 CS          34
+Harish               A106 ME          33
+
+6 rows selected.
+
+SQL> alter table staff add (dob date);
+
+Table altered.
+
+SQL> desc staff;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STAFF_NAME                                NOT NULL VARCHAR2(20)
+ STAFF_ID                                  NOT NULL VARCHAR2(4)
+ DEPARTMENT                                NOT NULL VARCHAR2(3)
+ AGE                                       NOT NULL NUMBER(38)
+ DOB                                                DATE
+
+SQL> update staff set dob = '20-FEB-1986' where staff_id='A101';
+
+1 row updated.
+
+SQL> update staff set dob = '21-MAR-1966' where staff_id='A201';
+
+1 row updated.
+
+SQL> update staff set dob = '02-FEB-1971' where staff_id='A403';
+
+1 row updated.
+
+SQL> update staff set dob = '04-JAN-1958' where staff_id='A901';
+
+1 row updated.
+
+SQL> update staff set dob = '21-JAN-1982' where staff_id='A501';
+
+1 row updated.
+
+SQL> update staff set dob = '21-JAN-1983' where staff_id='A106';
+
+1 row updated.
+
+SQL> select * from staff;
+
+STAFF_NAME           STAF DEP        AGE DOB
+-------------------- ---- --- ---------- ---------
+Arun                 A101 CS          30 20-FEB-86
+Ajesh                A201 IT          50 21-MAR-66
+Anil                 A403 EC          45 02-FEB-71
+Sunil                A901 EE          58 04-JAN-58
+Aji                  A501 CS          34 21-JAN-82
+Harish               A106 ME          33 21-JAN-83
+
+6 rows selected.
+
+SQL> update staff set age=60 where staff_id='A403';
+
+1 row updated.
+
+SQL> select * from staff;
+
+STAFF_NAME           STAF DEP        AGE DOB
+-------------------- ---- --- ---------- ---------
+Arun                 A101 CS          30 20-FEB-86
+Ajesh                A201 IT          50 21-MAR-66
+Anil                 A403 EC          60 02-FEB-71
+Sunil                A901 EE          58 04-JAN-58
+Aji                  A501 CS          34 21-JAN-82
+Harish               A106 ME          33 21-JAN-83
+
+6 rows selected.
+
+SQL> select * from staff where department='CS';
+
+STAFF_NAME           STAF DEP        AGE DOB
+-------------------- ---- --- ---------- ---------
+Arun                 A101 CS          30 20-FEB-86
+Aji                  A501 CS          34 21-JAN-82
+
+SQL> delete from staff where age<35;
+
+3 rows deleted.
+
+SQL> select * from staff;
+
+STAFF_NAME           STAF DEP        AGE DOB
+-------------------- ---- --- ---------- ---------
+Ajesh                A201 IT          50 21-MAR-66
+Anil                 A403 EC          60 02-FEB-71
+Sunil                A901 EE          58 04-JAN-58
+
+SQL> select staff_id,staff_name from staff order by age desc;
+
+STAF STAFF_NAME
+---- --------------------
+A403 Anil
+A901 Sunil
+A201 Ajesh
+
+SQL> select staff_name "Name",staff_id,department "Dept" ,age from staff;
+
+Name                 STAF Dep        AGE
+-------------------- ---- --- ----------
+Ajesh                A201 IT          51
+Anil                 A403 EC          61
+Sunil                A901 EE          59
+
+SQL> select staff_name,department from staff where department in ('ME','EC');
+
+STAFF_NAME           DEP
+-------------------- ---
+Anil                 EC
+
+SQL>
+
+SQL> select avg(age) "Average age" from staff;
+
+Average age
+-----------
+         56
+
+SQL> select upper(name) "Name",lower(dept) "Dept" from staff;
+
+Name                 Dep
+-------------------- ---
+AJESH                it
+ANIL                 ec
+SUNIL                ee
+
+SQL> update staff set age = age+1;
+
+3 rows updated.
+
+STAFF_NAME           STAF DEP        AGE DOB
+-------------------- ---- --- ---------- ---------
+Ajesh                A201 IT          51 21-MAR-66
+Anil                 A403 EC          61 02-FEB-71
+Sunil                A901 EE          59 04-JAN-58
+
+SQL> commit;
+
+Commit complete.
+
+SQL>

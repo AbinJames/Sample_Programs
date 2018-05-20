@@ -1,0 +1,36 @@
+Program
+create or replace function total (id in NUMBER) return float
+IS s float;
+BEGIN
+Select physics_mark+chemistry_mark+maths_mark into s from student4 where regno=id; 
+return s;
+End;
+/
+DECLARE
+sid int;
+t float;
+
+BEGIN
+sid := &sid;
+t:=total (sid);
+dbms_output.put_line('Total marks : '||t);
+END;
+/
+
+ Output
+SQL> select * from student4;
+
+     REGNO NAME       PHYSICS_MARK CHEMISTRY_MARK MATHS_MARK
+---------- ---------- ------------ -------------- ----------
+         1 Abin                 25             25         25
+         2 Amalu                25             35         45
+
+SQL> @"Z:\S5_abin J\Lab\PLSQL\PLSQL Programs\17 - Total Marks.sql"
+Enter value for sid: 1
+old   7: sid := &sid;
+new   7: sid := 1;
+Total marks : 75
+
+PL/SQL procedure successfully completed.
+
+SQL>

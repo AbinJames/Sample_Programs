@@ -1,0 +1,50 @@
+Aim
+Create a table student(rollno, stud_name,sessionals, univ_mark). If the sessionals+univ_mark>150, raise an error message. Also handle all the possible exceptions.
+
+Program
+DECLARE
+ses float;
+mark float;
+r int;
+exc exception;
+BEGIN
+r := &r;
+SELECT sessionals, univ_mark INTO ses, mark FROM stud WHERE rollno=r;
+IF ses+mark>150 THEN 
+	RAISE exc;
+END IF;
+EXCEPTION
+WHEN exc THEN
+	dbms_output.put_line('Total marks > 150');
+WHEN NO_DATA_FOUND THEN
+	dbms_output.put_line('No such data in Table');
+WHEN TOO_MANY_ROWS THEN
+	dbms_output.put_line('More than one row selected'); 
+END;
+/
+
+Output
+SQL> select * from stud;
+
+    ROLLNO STUD_NAME  SESSIONALS  UNIV_MARK
+---------- ---------- ---------- ----------
+         1 Abin               45        100
+         2 Anand              55        100
+         3 Alan               30         70
+         4 Amalu              40        105
+
+SQL> @"Z:\S5_abin J\Lab\PLSQL\13 - Exceptions.sql"
+Enter value for r: 2
+old   7: r := &r;
+new   7: r := 2;
+Total marks > 150
+
+PL/SQL procedure successfully completed.
+
+SQL> @"Z:\S5_abin J\Lab\PLSQL\13 - Exceptions.sql"
+Enter value for r: 5
+old   7: r := &r;
+new   7: r := 5;
+No data in Table
+
+PL/SQL procedure successfully completed.

@@ -1,0 +1,47 @@
+create or replace trigger chang before insert or update on num for each row
+Declare
+
+Begin
+IF :new.b<:old.b THEN raise_application_error(-20001,'Error : Old b > new b'); 
+
+ELSIF :new.a+:new.b<75 THEN
+raise_application_error(-20001,'Error : a+b<75'); 
+end if;
+end;
+/
+
+Output
+SQL> @"Z:\S5_abin J\Lab\PLSQL\PLSQL Programs\22 - Number table.sql"
+
+Trigger created.
+
+
+SQL> insert into num values(35,55);
+
+1 row created.
+
+SQL> insert into num values(35,25);
+insert into num values(35,25)
+            *
+ERROR at line 1:
+ORA-20001: Error : a+b<75
+ORA-06512: at "ABINJ.CHANG", line 7
+ORA-04088: error during execution of trigger 'ABINJ.CHANG'
+
+
+SQL> select * from num;
+
+         A          B
+---------- ----------
+        35         55
+
+SQL> update num set b = 45 where b=55;
+update num set b = 45 where b=55
+       *
+ERROR at line 1:
+ORA-20001: Error : Old b > new b
+ORA-06512: at "ABINJ.CHANG", line 4
+ORA-04088: error during execution of trigger 'ABINJ.CHANG'
+
+
+SQL>

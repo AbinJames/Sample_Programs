@@ -1,0 +1,10 @@
+digraph dfa1
+{
+A -> B [label="1"];
+A -> A [label="0"];
+B -> B [label="1"];
+B -> C [label="0"];
+C -> A [label="1"];
+C [peripheries=2];
+A[shape=polygon, sides=4];
+}

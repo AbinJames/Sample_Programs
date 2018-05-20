@@ -1,0 +1,14 @@
+digraph dfa1
+{
+
+A -> B 
+A -> C 
+B -> D 
+C -> D 
+D -> E 
+B -> F
+F -> C
+E -> A
+A -> G
+G -> E
+}

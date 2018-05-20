@@ -1,0 +1,56 @@
+Program
+create or replace procedure grade(r in number, g out char)
+IS
+m float;
+BEGIN
+SELECT marks INTO m from student5 where rollno=r;
+IF m>100 THEN g:='A';
+ELSIF m>70 and m<=100 THEN g:='B';
+ELSIF m>50 and m<=70 THEN g:='C';
+ELSE g:='Fail';
+END IF;
+UPDATE student5 set grade = g where rollno =r;
+END;
+/
+DECLARE
+r int;
+g char(5);
+m float;
+
+BEGIN
+r := &r;
+grade(r,g);
+dbms_output.put_line('Grade : '||g);
+END;
+/
+
+Output
+SQL> select * from student5;
+
+    ROLLNO      MARKS GRADE
+---------- ---------- -----
+         1        100
+         2         80
+         3         40
+
+SQL> @"Z:\S5_abin J\Lab\PLSQL\PLSQL Programs\grade.sql"
+
+Procedure created.
+
+SQL> @"Z:\S5_abin J\Lab\PLSQL\PLSQL Programs\19 - Grade.sql"
+Enter value for r: 1
+old   7: r := &r;
+new   7: r := 1;
+Grade : B
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from student5;
+
+    ROLLNO      MARKS GRADE
+---------- ---------- -----
+         1        100 B
+         2         80
+         3         40
+
+SQL>

@@ -1,0 +1,49 @@
+Aim
+Write a PL/SQL program to find largest and smallest of 3 numbers.
+
+Program
+DECLARE
+n1 number(6);
+n2 number(6);
+n3 number(6);
+l number(6);
+s number(6);
+BEGIN
+n1 := &n1;
+n2 := &n2;
+n3 := &n3;
+IF (n1>n2 and n1>n3)
+THEN
+	l := n1;
+ELSIF (n2>n3)
+THEN
+	l := n2;
+ELSE
+	l := n3;
+END IF;
+IF (n1<n2 and n1<n3)
+THEN
+	s := n1;
+ELSIF (n2<n3)
+THEN
+	s := n2;
+ELSE
+	s := n3;
+END IF;
+dbms_output.put_line('Largest  : ' || l);
+dbms_output.put_line('Smallest : ' || s);
+END;
+/
+
+Output
+Enter value for n1: 3
+old   8: n1 := &n1;
+new   8: n1 := 3;
+Enter value for n2: 5
+old   9: n2 := &n2;
+new   9: n2 := 5;
+Enter value for n3: 4
+old  10: n3 := &n3;
+new  10: n3 := 4;
+Largest  : 5
+Smallest : 3

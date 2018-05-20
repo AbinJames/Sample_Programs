@@ -1,0 +1,46 @@
+SQL> select dbms_random.random from dual;
+
+       RANDOM
+_____________
+   1393936551
+
+
+E.g.: Generating a random number between 0 and 1.
+SQL> select dbms_random.value from dual;
+
+        VALUE
+_____________
+            1
+
+
+E.g.: Generating a random number from a range, between 1 to 1000.
+SQL> select dbms_random.value(1,1000) num from dual;
+
+          NUM
+_____________
+          611
+
+
+E.g.: Generating a 12 digit random number.
+SQL> select dbms_random.value(100000000000, 999999999999) num from dual;
+
+          NUM
+_____________
+ 175055628780
+
+
+E.g.: Generating an upper case string of 20 characters
+SQL> select dbms_random.string('U', 20) str from dual;
+
+STR
+_______________________
+VUOQOSTLHCKIPIADIZTD
+
+
+E.g.: Generating a lower case string of 20 characters
+SQL> select dbms_random.string('L', 20) str from dual;
+
+STR
+____________________
+xpoovuspmehvcptdtzcz
+

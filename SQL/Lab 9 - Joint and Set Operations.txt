@@ -1,0 +1,224 @@
+SQL> create table student(stdid int primary key, name varchar(10), rn int unique, marks float check(marks between 0 and 100));
+
+Table created.
+
+SQL> create table book (bid int primary key, bname varchar(20), bauthor varchar(20));
+
+Table created.
+
+SQL> create table reserved (stdid int references student, bid int references book, rdate date);
+
+Table created.
+
+SQL> create table accessed (stdid int references student, bid int references book, adate date);
+
+Table created.
+
+SQL> insert into student values (101,'Abin',1,92);
+
+1 row created.
+
+SQL> insert into student values (102,'Anand',2,82);
+
+1 row created.
+
+SQL> insert into student values (103,'Amalu',3,72);
+
+1 row created.
+
+SQL> insert into student values (104,'David',4,62);
+
+1 row created.
+
+SQL> insert into student values (105,'Chippy',5,52);
+
+1 row created.
+
+SQL> select * from student;
+
+     STDID NAME               RN      MARKS
+---------- ---------- ---------- ----------
+       101 Abin                1         92
+       102 Anand               2         82
+       103 Amalu               3         72
+       104 David               4         62
+       105 Chippy              5         52
+
+SQL> insert into book values(1, 'Harry Potter', 'J K Rowling');
+
+1 row created.
+
+SQL> insert into book values(2, 'DS', 'Ramesh Babu');
+
+1 row created.
+
+SQL> insert into book values(3, 'Operating Systems', 'Silbershartz');
+
+1 row created.
+
+SQL> insert into book values(4, 'DBMS', 'Navathe');
+
+1 row created.
+
+SQL> insert into book values(5, 'Mathematics IV', 'N P Bali');
+
+1 row created.
+
+       BID BNAME                BAUTHOR
+---------- -------------------- --------------------
+         1 Harry Potter         J K Rowling
+         2 DS                   Ramesh Babu
+         3 Operating Systems    Silbershartz
+         4 DBMS                 Navathe
+         5 Mathematics IV       N P Bali
+
+SQL> insert into reserved values (101, 4, '21-AUG-16');
+
+1 row created.
+
+SQL> insert into reserved values (102, 1, '22-AUG-16');
+
+1 row created.
+
+SQL> insert into reserved values (101, 5, '22-AUG-16');
+
+1 row created.
+
+SQL> insert into reserved values (103, 5, '24-AUG-16');
+
+1 row created.
+
+SQL> insert into reserved values (103, 2, '21-AUG-16');
+
+1 row created.
+
+SQL> select * from reserved;
+
+     STDID        BID RDATE
+---------- ---------- ---------
+       101          4 21-AUG-16
+       102          1 22-AUG-16
+       101          5 22-AUG-16
+       103          5 24-AUG-16
+       103          2 21-AUG-16
+
+SQL> insert into accessed values (101, 2, '21-AUG-16');
+
+1 row created.
+
+SQL> insert into accessed values (105, 3, '22-AUG-16');
+
+1 row created.
+
+SQL> insert into accessed values (104, 2, '23-AUG-16');
+
+1 row created.
+
+SQL> insert into accessed values (102, 1, '23-AUG-16');
+
+1 row created.
+
+SQL> insert into accessed values (103, 1, '24-AUG-16');
+
+1 row created.
+
+SQL> select * from accessed;
+
+     STDID        BID ADATE
+---------- ---------- ---------
+       101          2 21-AUG-16
+       105          3 22-AUG-16
+       104          2 23-AUG-16
+       102          1 23-AUG-16
+       103          1 24-AUG-16
+
+SQL> select distinct name from student s, reserved r where s.stdid=r.stdid;
+
+NAME
+----------
+Anand
+Amalu
+Abin
+
+SQL> select name, marks, a.bid, adate from student s, accessed a where a.stdid=s.stdid;
+
+NAME            MARKS        BID ADATE
+---------- ---------- ---------- ---------
+Abin               92          2 21-AUG-16
+Chippy             52          3 22-AUG-16
+David              62          2 23-AUG-16
+Anand              82          1 23-AUG-16
+Amalu              72          1 24-AUG-16
+
+
+SQL> select distinct b.bid, bname, bauthor from book b, accessed a where a.bid=b.bid;
+
+       BID BNAME                BAUTHOR
+---------- -------------------- --------------------
+         1 Harry Potter         J K Rowling
+         2 DS                   Ramesh Babu
+         3 Operating Systems    Silbershartz
+
+SQL> select name from student s, accessed a, book b where a.stdid=s.stdid and a.bid = b.bid and bname='DS';
+
+NAME
+----------
+Abin
+David
+
+SQL> select s. stdid, name, marks from student s, reserved r, book b where r.stdid=s.stdid and r.bid = b.bid and bname='DBMS';
+
+     STDID NAME            MARKS
+---------- ---------- ----------
+       101 Abin               92
+
+SQL> select distinct s.stdid from accessed a union select distinct s.stdid from reserved r;
+
+     STDID
+----------
+       101
+       102
+       103
+       104
+       105
+
+SQL> select distinct s.stdid from accessed a intersect select distinct s.stdid from reserved r;
+
+     STDID
+----------
+       101
+       102
+       103
+
+SQL> select distinct s.stdid from accessed a minus select distinct s.stdid from reserved r;
+
+     STDID
+----------
+       104
+       105
+
+SQL> select distinct s.stdid,name from student s, accessed a where s.stdid=a.stdid intersect select distinct s.stdid,name from student s, reserved r where s.stdid=r.stdid;
+
+     STDID NAME
+---------- ----------
+       101 Abin
+       102 Anand
+       103 Amalu
+
+SQL> select name, bname, bauthor from student s, accessed a, book b where s.stdid=a.stdid and b.bid=a.bid union select name, bname, bauthor from student s, reserved r, book b where s.stdid=r.stdid and b.bid=r.bid;
+
+NAME       BNAME                BAUTHOR
+---------- -------------------- --------------------
+Abin       DBMS                 Navathe
+Abin       DS                   Ramesh Babu
+Abin       Mathematics IV       N P Bali
+Amalu      DS                   Ramesh Babu
+Amalu      Harry Potter         J K Rowling
+Amalu      Mathematics IV       N P Bali
+Anand      Harry Potter         J K Rowling
+Chippy     Operating Systems    Silbershartz
+David      DS                   Ramesh Babu
+
+9 rows selected.
+
+SQL>

@@ -1,0 +1,199 @@
+SQL> create table student2 (studentno int primary key, name varchar(10));
+
+Table created.
+
+SQL> create table membership (memno int primary key, studentno int references student2);
+
+Table created.
+
+SQL> create table book2 (bookno int primary key, bname varchar(20), author varchar(20));
+
+Table created.
+
+SQL> create table issrecord (issno int primary key, issdate date, memno int references membership, bookno int references book2);
+
+Table created.
+
+SQL> insert into student2 values (1, 'Abin');
+
+1 row created.
+
+SQL> insert into student2 values (2, 'Alan');
+
+1 row created.
+
+SQL> insert into student2 values (3, 'Anand');
+
+1 row created.
+
+SQL> insert into student2 values (4, 'Amalu');
+
+1 row created.
+
+SQL> insert into student2 values (5, 'Ajin');
+
+1 row created.
+
+SQL> select * from student2;
+
+ STUDENTNO NAME
+---------- ----------
+         1 Abin
+         2 Alan
+         3 Anand
+         4 Amalu
+         5 Ajin
+
+SQL> insert into membership values(101,1);
+
+1 row created.
+
+SQL> insert into membership values(102,2);
+
+1 row created.
+
+SQL> insert into membership values(103,3);
+
+1 row created.
+
+SQL> insert into membership values(104,4);
+
+1 row created.
+
+SQL> insert into membership values(105,5);
+
+1 row created.
+
+SQL> select * from membership;
+
+     MEMNO  STUDENTNO
+---------- ----------
+       101          1
+       102          2
+       103          3
+       104          4
+       105          5
+
+
+SQL> insert into book2 values(1,'Harry Potter','J K Rowling');
+
+1 row created.
+
+SQL> insert into book2 values(2,'XYZ','CJ Date');
+
+1 row created.
+
+SQL> insert into book2 values(3,'DBMS','Navathe');
+
+1 row created.
+
+SQL> insert into book2 values(4,'Maths','N P Bali');
+
+1 row created.
+
+SQL> insert into book2 values(5,'DSP','Ramesh Babu');
+
+1 row created.
+
+SQL> select * from book2;
+
+    BOOKNO BNAME                AUTHOR
+---------- -------------------- --------------------
+         1 Harry Potter         J K Rowling
+         2 XYZ                  CJ Date
+         3 DBMS                 Navathe
+         4 Maths                N P Bali
+         5 DSP                  Ramesh Babu
+
+SQL>
+
+SQL> insert into issrecord values (1,'22-SEP-2016',101,2);
+
+1 row created.
+
+SQL> insert into issrecord values (2,'24-SEP-2016',102,4);
+
+1 row created.
+
+SQL> insert into issrecord values (3,'22-SEP-2016',105,2);
+
+1 row created.
+
+SQL> insert into issrecord values (4,'20-SEP-2016',103,1);
+
+1 row created.
+
+SQL> insert into issrecord values (5,'20-SEP-2016',101,1);
+
+1 row created.
+
+SQL> select * from issrecord;
+
+     ISSNO ISSDATE        MEMNO     BOOKNO
+---------- --------- ---------- ----------
+         1 22-SEP-16        101          2
+         2 24-SEP-16        102          4
+         3 22-SEP-16        105          2
+         4 20-SEP-16        103          1
+         5 20-SEP-16        101          1
+
+SQL> select name, memno from student2 s, membership m where s.studentno=m.studentno;
+
+NAME            MEMNO
+---------- ----------
+Abin              101
+Alan              102
+Anand             103
+Amalu             104
+Ajin              105
+
+SQL> select issno, name, bname from student2 s, membership m, book2 b, issrecord i where issdate in to_char(sysdate) and i.bookno=b.bookno and i.memno=m.memno and m.studentno=s.studentno;
+
+     ISSNO NAME       BNAME
+---------- ---------- --------------------
+         3 Ajin       XYZ
+         1 Abin       XYZ
+
+SQL> select s.studentno, name from student2 s, membership m, book2 b, issrecord i where author='CJ Date' and i.bookno=b.bookno and i.memno=m.memno and m.studentno=s.studentno;
+
+ STUDENTNO NAME
+---------- ----------
+         1 Abin
+         5 Ajin
+
+SQL> select m.memno, count(i.memno) from student2 s, membership m, book2 b, issrecord i where i.bookno=b.bookno and i.memno=m.memno and m.studentno=s.studentno group by m.memno;
+
+     MEMNO COUNT(I.MEMNO)
+---------- --------------s
+       102              1
+       101              2
+       105              1
+       103              1
+
+SQL> select bname, author from student2 s, membership m, book2 b, issrecord i where s.studentno=5 and i.bookno=b.bookno and i.memno=m.memno and m.studentno=s.studentno;
+
+BNAME                AUTHOR
+-------------------- --------------------
+XYZ                  CJ Date
+
+SQL> select distinct b.bookno,bname,author from student2 s, membership m, book2 b, issrecord i where issdate in to_char (sysdate) and i.bookno=b.bookno and i.memno=m.memno and m.studentno=s.studentno;
+
+    BOOKNO BNAME                AUTHOR
+---------- -------------------- --------------------
+         2 XYZ                  CJ Date
+
+SQL> create view lib as select issno, issdate, name,bname from student2 s, membership m, book2 b, issrecord i where i.bookno=b.bookno and i.memno=m.memno and m.studentno=s.studentno;
+
+View created.
+
+SQL> select * from lib;
+
+     ISSNO ISSDATE   NAME       BNAME
+---------- --------- ---------- --------------------
+         5 20-SEP-16 Abin       Harry Potter
+         4 20-SEP-16 Anand      Harry Potter
+         3 22-SEP-16 Ajin       XYZ
+         1 22-SEP-16 Abin       XYZ
+         2 24-SEP-16 Alan       Maths
+
+SQL>

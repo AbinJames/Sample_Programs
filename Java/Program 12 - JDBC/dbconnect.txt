@@ -1,0 +1,5 @@
+copy jar file into the samfolder where Dbconnect.java exits
+
+
+javac Dbconnect.java
+java -classpath ".;mysql-connector-java-5.1.18.jar" DbConnect

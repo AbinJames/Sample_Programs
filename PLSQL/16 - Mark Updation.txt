@@ -1,0 +1,57 @@
+Program
+DECLARE
+i t1%rowtype;
+s number(10,2);
+u number(10,2);
+CURSOR c is select * from t1;
+BEGIN
+open c;
+LOOP
+FETCH c into i;
+EXIT when c%notfound;
+IF i.sessionals between 30 and 34 THEN
+	i.sessionals:=35;
+	UPDATE t1 set sessionals = i.sessionals where rollno = i.rollno;
+END IF;	
+u:=i.sessionals + i.univ_mark;
+IF u>75 THEN
+	INSERT into t2 values (i.rollno,i.univ_mark,i.sessionals);
+END IF;	
+END LOOP;
+close c;
+END;
+/ 
+
+output
+SQL> select * from t1;
+
+    ROLLNO  UNIV_MARK SESSIONALS
+---------- ---------- ----------
+         1         70         33
+         2         50         33
+         3         30         35
+         4         90         45
+
+
+SQL> @"Z:\S5_abin J\Lab\PLSQL\PLSQL Programs\16 - Mark Updation.sql"
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from t1;
+
+    ROLLNO  UNIV_MARK SESSIONALS
+---------- ---------- ----------
+         1         70         35
+         2         50         35
+         3         30         35
+         4         90         45
+
+SQL> select * from t2;
+
+    ROLLNO  UNIV_MARK SESSIONALS
+---------- ---------- ----------
+         1         70         35
+         2         50         35
+         4         90         45
+
+SQL>

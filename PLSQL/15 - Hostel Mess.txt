@@ -1,0 +1,51 @@
+Program 
+DECLARE
+i hostel_mess%rowtype;
+r number(10,2);
+CURSOR c is select * from hostel_mess;
+BEGIN
+open c;
+LOOP
+FETCH c into i;
+EXIT when c%notfound;
+IF i.v_nv = 'v' THEN 
+	r := .1*i.messfee;
+	i.messfee := i.messfee + .1* i.messfee;
+	UPDATE hostel_mess set messfee=i.messfee;
+	INSERT into vegetarian values (i.stud_no, i.name,r,sysdate);
+ELSE 
+	r := .2*i.messfee;
+	i.messfee := i.messfee + .2* i.messfee;
+	UPDATE hostel_mess set messfee=i.messfee;
+	INSERT into nonvegetarian values (i.stud_no, i.name,r,sysdate);
+END IF;
+END LOOP;
+close c;
+END;
+/ 
+
+Output
+SQL> select * from hostel_mess;
+
+   STUD_NO NAME          MESSFEE V_NV
+---------- ---------- ---------- ----
+         1 Abin             4000 nv
+         2 Anand            3500 v
+
+SQL> @"Z:\S5_abin J\Lab\PLSQL\15 - Hostel Mess.sql"
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from vegetarian;
+
+   STUD_NO NAME       RAISEINFEE RAISEDATE
+---------- ---------- ---------- ---------
+         2 Anand             350 27-OCT-16
+
+SQL> select * from nonvegetarian;
+
+   STUD_NO NAME       RAISEINFEE RAISEDATE
+---------- ---------- ---------- ---------
+         1 Abin              800 27-OCT-16
+
+SQL>

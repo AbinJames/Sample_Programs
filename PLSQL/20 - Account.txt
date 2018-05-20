@@ -1,0 +1,35 @@
+create or replace trigger ln after update on account for each row
+when (new.balance<0)
+Declare
+
+Begin
+insert into loan values(:new.accno,-1*:new.balance,:new.branch);
+insert into borrower values (:new.accno,:new.cname);
+end;
+/
+ output
+SQL> @"Z:\S5_abin J\Lab\PLSQL\PLSQL Programs\trig.sql"
+
+Trigger created.
+
+SQL> select * from account;
+
+     ACCNO CNAME         BALANCE BRANCH
+---------- ---------- ---------- --------------------
+       100 Abin             1000 MLM
+
+SQL> update account set balance = balance - 2000 ;
+
+1 row updated.
+
+SQL> select * from loan;
+
+    LOANNO        AMT BRANCH
+---------- ---------- --------------------
+       100       1000 MLM
+
+SQL> select * from borrower;
+
+    LOANNO CNAME
+---------- ----------
+       100 Abin

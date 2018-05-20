@@ -1,0 +1,17 @@
+Aim
+Write a PL/SQL program to insert the first 15 odd nos into a table ODD and first 15 even nos into a table EVEN
+
+Program
+DECLARE
+BEGIN
+FOR i IN 1..30 LOOP
+	IF(i mod 2 = 0) THEN
+		insert into even values (i);
+	ELSE
+		insert into odd values (i);
+	END IF;
+END LOOP;
+END;
+/
+
+Output

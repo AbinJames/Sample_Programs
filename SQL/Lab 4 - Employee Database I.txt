@@ -1,0 +1,239 @@
+SQL> create table employee (empno int primary key,empname varchar(10),place varchar(20),desig varchar(20),salary float default 100000,dept_no int check(dept_no between 1 and 10),dept_name varchar(20));
+
+Table created.
+
+SQL> desc employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(38)
+ EMPNAME                                            VARCHAR2(10)
+ PLACE                                              VARCHAR2(20)
+ DESIG                                              VARCHAR2(20)
+ SALARY                                             FLOAT(126)
+ DEPT_NO                                            NUMBER(38)
+ DEPT_NAME                                          VARCHAR2(20)
+
+SQL> insert into employee values (1,'Abin','MLM','Officer',10000,1,'Software');
+
+1 row created.
+
+SQL> insert into employee values (2,'Anand','KTM','Manager',12000,1,'Software');
+
+1 row created.
+
+SQL> insert into employee values (3,'Sam','EKM','Officer',13000,2,'Hardware');
+
+1 row created.
+
+SQL> insert into employee values (4,'David','EKM','Manager',20000,2,'Hardware');
+
+1 row created.
+SQL> insert into employee (empno,empname,place,desig,dept_no,dept_name) values(5,'Alan','MLM','Manager',1,'Software');
+
+1 row created.
+
+SQL> select empno,empname,salary from employee;
+
+     EMPNO EMPNAME        SALARY
+---------- ---------- ----------
+         1 Abin            10000
+         2 Anand           12000
+         3 Sam             13000
+         4 David           20000
+         5 Alan           100000
+
+SQL> select * from employee;
+
+     EMPNO EMPNAME    PLACE                DESIG                    SALARY
+---------- ---------- -------------------- -------------------- ----------
+   DEPT_NO DEPT_NAME
+---------- --------------------
+         1 Abin       MLM                  Officer                   10000
+         1 Software
+
+         2 Anand      KTM                  Manager                   12000
+         1 Software
+
+         3 Sam        EKM                  Officer                   13000
+         2 Hardware
+
+
+     EMPNO EMPNAME    PLACE                DESIG                    SALARY
+---------- ---------- -------------------- -------------------- ----------
+   DEPT_NO DEPT_NAME
+---------- --------------------
+         4 David      EKM                  Manager                   20000
+         2 Hardware
+
+         5 Alan       MLM                  Manager                  100000
+         1 Software
+
+
+SQL> select * from employee where salary>10000;
+
+     EMPNO EMPNAME    PLACE                DESIG                    SALARY
+---------- ---------- -------------------- -------------------- ----------
+   DEPT_NO DEPT_NAME
+---------- --------------------
+         2 Anand      KTM                  Manager                   12000
+         1 Software
+
+         3 Sam        EKM                  Officer                   13000
+         2 Hardware
+
+         4 David      EKM                  Manager                   20000
+         2 Hardware
+
+
+     EMPNO EMPNAME    PLACE                DESIG                    SALARY
+---------- ---------- -------------------- -------------------- ----------
+   DEPT_NO DEPT_NAME
+---------- --------------------
+         5 Alan       MLM                  Manager                  100000
+         1 Software
+
+
+SQL> update employee set salary = salary+1000 where desig = 'Officer';
+
+2 rows updated.
+
+SQL> select * from employee;
+
+     EMPNO EMPNAME    PLACE                DESIG                    SALARY
+---------- ---------- -------------------- -------------------- ----------
+   DEPT_NO DEPT_NAME
+---------- --------------------
+         1 Abin       MLM                  Officer                   11000
+         1 Software
+
+         2 Anand      KTM                  Manager                   12000
+         1 Software
+
+         3 Sam        EKM                  Officer                   14000
+         2 Hardware
+
+
+     EMPNO EMPNAME    PLACE                DESIG                    SALARY
+---------- ---------- -------------------- -------------------- ----------
+   DEPT_NO DEPT_NAME
+---------- --------------------
+         4 David      EKM                  Manager                   20000
+         2 Hardware
+
+         5 Alan       MLM                  Manager                  100000
+         1 Software
+
+SQL> select empno,empname from employee where salary between 10000 and 15000;
+
+EMPNO EMPNAME    PLACE                DESIG                    SALARY
+---------- ---------- -------------------- -------------------- ----------
+   DEPT_NO DEPT_NAME
+---------- --------------------
+         1 Abin       MLM                  Officer                   11000
+         1 Software
+
+         2 Anand      KTM                  Manager                   12000
+         1 Software
+
+         3 Sam        EKM                  Officer                   14000
+         2 Hardware
+
+
+SQL> select * from employee where empname like'A%';
+
+     EMPNO EMPNAME    PLACE                DESIG                    SALARY
+---------- ---------- -------------------- -------------------- ----------
+   DEPT_NO DEPT_NAME
+---------- --------------------
+         1 Abin       MLM                  Officer                   11000
+         1 Software
+
+         2 Anand      KTM                  Manager                   12000
+         1 Software
+
+         5 Alan       MLM                  Manager                  100000
+         1 Software
+
+
+SQL> update employee set salary = 15000 where desig = 'Officer';
+
+2 rows updated.
+
+SQL> select * from employee;
+
+     EMPNO EMPNAME    PLACE                DESIG                    SALARY
+---------- ---------- -------------------- -------------------- ----------
+   DEPT_NO DEPT_NAME
+---------- --------------------
+         1 Abin       MLM                  Officer                   15000
+         1 Software
+
+         2 Anand      KTM                  Manager                   12000
+         1 Software
+
+         3 Sam        EKM                  Officer                   15000
+         2 Hardware
+
+
+     EMPNO EMPNAME    PLACE                DESIG                    SALARY
+---------- ---------- -------------------- -------------------- ----------
+   DEPT_NO DEPT_NAME
+---------- --------------------
+         4 David      EKM                  Manager                   20000
+         2 Hardware
+
+         5 Alan       MLM                  Manager                  100000
+         1 Software
+
+
+SQL> alter table employee add(district varchar(10));
+
+Table altered.
+
+SQL> desc employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(38)
+ EMPNAME                                            VARCHAR2(10)
+ PLACE                                              VARCHAR2(20)
+ DESIG                                              VARCHAR2(20)
+ SALARY                                             FLOAT(126)
+ DEPT_NO                                            NUMBER(38)
+ DEPT_NAME                                          VARCHAR2(20)
+ DISTRICT                                           VARCHAR2(10)
+
+SQL> alter table employee drop column district;
+
+Table altered.
+
+SQL> desc employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(38)
+ EMPNAME                                            VARCHAR2(10)
+ PLACE                                              VARCHAR2(20)
+ DESIG                                              VARCHAR2(20)
+ SALARY                                             FLOAT(126)
+ DEPT_NO                                            NUMBER(38)
+ DEPT_NAME                                          VARCHAR2(20)
+
+SQL> alter table employee rename column desig to designation;
+
+Table altered.
+
+SQL> desc employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(38)
+ EMPNAME                                            VARCHAR2(10)
+ PLACE                                              VARCHAR2(20)
+ DESIGNATION                                        VARCHAR2(20)
+ SALARY                                             FLOAT(126)
+ DEPT_NO                                            NUMBER(38)
+ DEPT_NAME                                          VARCHAR2(20)
+
+SQL> commit;
+
+Commit complete.
+
+SQL>

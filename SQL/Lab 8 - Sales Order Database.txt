@@ -1,0 +1,152 @@
+
+SQL> create table client_master (clientno int primary key, cname varchar(10), city varchar(10));
+
+Table created.
+
+SQL> create table sales_order (orderno varchar(10) unique check(orderno like 'o%'), clientno int references client_master, orderdate date);
+
+Table created.
+
+SQL> create table salesman_master (salesmanno int primary key, sname varchar(10), city varchar(10));
+
+Table created.
+
+SQL> desc sales_order;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ORDERNO                                   NOT NULL VARCHAR2(10)
+ CLIENTNO                                           NUMBER(38)
+ ORDERDATE                                          DATE
+
+SQL> desc client_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CLIENTNO                                  NOT NULL NUMBER(38)
+ CNAME                                              VARCHAR2(10)
+ CITY                                               VARCHAR2(10)
+
+SQL> desc salesman_master;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SALESMANNO                                NOT NULL NUMBER(38)
+ SNAME                                              VARCHAR2(10)
+ CITY                                               VARCHAR2(10)
+
+SQL> insert into client_master (clientno, cname, city) values (&clientno, '&cname', '&city');
+Enter value for clientno: 1
+Enter value for cname: Rahul
+Enter value for city: Mumbai
+old   1: insert into client_master (clientno, cname, city) values (&clientno, '&cname', '&city')
+new   1: insert into client_master (clientno, cname, city) values (1, 'Rahul', 'Mumbai')
+
+1 row created.
+
+SQL> insert into client_master (clientno, cname, city) values (&clientno, '&cname', '&city');
+Enter value for clientno: 2
+Enter value for cname: Abin
+Enter value for city: Kottayam
+old   1: insert into client_master (clientno, cname, city) values (&clientno, '&cname', '&city')
+new   1: insert into client_master (clientno, cname, city) values (2, 'Abin', 'Kottayam')
+
+1 row created.
+
+SQL> insert into client_master (clientno, cname, city) values (&clientno, '&cname', '&city');
+Enter value for clientno: 3
+Enter value for cname: David
+Enter value for city: Delhi
+old   1: insert into client_master (clientno, cname, city) values (&clientno, '&cname', '&city')
+new   1: insert into client_master (clientno, cname, city) values (3, 'David', 'Delhi')
+
+1 row created.
+
+SQL> select * from client_master;
+
+  CLIENTNO CNAME      CITY
+---------- ---------- ----------
+         1 Rahul      Mumbai
+         2 Abin       Kottayam
+         3 David      Delhi
+
+SQL> insert into sales_order (orderno, clientno, orderdate) values ('&orderno', &clientno, '&orderdate');
+Enter value for orderno: o123
+Enter value for clientno: 1
+Enter value for orderdate: 02-AUG-16
+old   1: insert into sales_order (orderno, clientno, orderdate) values ('&orderno', &clientno, '&orderdate')
+new   1: insert into sales_order (orderno, clientno, orderdate) values ('o123', 1, '02-AUG-16')
+
+1 row created.
+
+SQL> insert into sales_order (orderno, clientno, orderdate) values ('&orderno', &clientno, '&orderdate');
+Enter value for orderno: o252
+Enter value for clientno: 2
+Enter value for orderdate: 03-AUG-16
+old   1: insert into sales_order (orderno, clientno, orderdate) values ('&orderno', &clientno, '&orderdate')
+new   1: insert into sales_order (orderno, clientno, orderdate) values ('o252', 2, '03-AUG-16')
+
+1 row created.
+
+SQL> insert into sales_order (orderno, clientno, orderdate) values ('&orderno', &clientno, '&orderdate');
+Enter value for orderno: o145
+Enter value for clientno: 1
+Enter value for orderdate: 04-JUN-16
+old   1: insert into sales_order (orderno, clientno, orderdate) values ('&orderno', &clientno, '&orderdate')
+new   1: insert into sales_order (orderno, clientno, orderdate) values ('o145', 1, '04-JUN-16')
+
+1 row created.
+
+SQL> select * from sales_order;
+
+ORDERNO      CLIENTNO ORDERDATE
+---------- ---------- ---------
+o123                1 02-AUG-16
+o252                2 03-AUG-16
+o145                1 04-JUN-16
+
+SQL> insert into salesman_master (salesmanno, sname, city) values (&salesmanno, '&sname', '&city');
+Enter value for salesmanno: 1
+Enter value for sname: Anand
+Enter value for city: Mumbai
+old   1: insert into salesman_master (salesmanno, sname, city) values (&salesmanno, '&sname', '&city')
+new   1: insert into salesman_master (salesmanno, sname, city) values (1, 'Anand', 'Mumbai')
+
+1 row created.
+
+SQL> insert into salesman_master (salesmanno, sname, city) values (&salesmanno, '&sname', '&city');
+Enter value for salesmanno: 2
+Enter value for sname: Arun
+Enter value for city: Kochi;
+old   1: insert into salesman_master (salesmanno, sname, city) values (&salesmanno, '&sname', '&city')
+new   1: insert into salesman_master (salesmanno, sname, city) values (2, 'Arun', 'Kochi;')
+
+1 row created.
+
+SQL> select * from salesman_master;
+
+SALESMANNO SNAME      CITY
+---------- ---------- ----------
+         1 Anand      Mumbai
+         2 Arun       Kochi;
+
+SQL> select orderno, orderdate from sales_order s, client_master c where s.clientno=c.clientno and cname='Rahul';
+
+ORDERNO    ORDERDATE
+---------- ---------
+o123       02-AUG-16
+o145       04-JUN-16
+
+SQL> select sname "Name" from salesman_master where city='Mumbai' union select cname from client_master where city='Mumbai';
+
+Name
+----------
+Anand
+Rahul
+
+SQL> select orderno, cname, orderdate from client_master c, sales_order s where s.clientno=c.clientno;
+
+ORDERNO    CNAME      ORDERDATE
+---------- ---------- ---------
+o123       Rahul      02-AUG-16
+o252       Abin       03-AUG-16
+o145       Rahul      04-JUN-16
+
+SQL>

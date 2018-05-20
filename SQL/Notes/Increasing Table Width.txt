@@ -1,0 +1,2 @@
+sql>column column_name format a30
+sql>set linesize 300

@@ -1,0 +1,172 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Thu Aug 4 13:46:42 2016
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+Enter user-name: abinj@192.168.15.2
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> create table student (sid int,sname varchar(20),dept char(3),mark1 float,mark2 float);
+
+Table created.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(38)
+ SNAME                                              VARCHAR2(20)
+ DEPT                                               CHAR(3)
+ MARK1                                              FLOAT(126)
+ MARK2                                              FLOAT(126)
+
+SQL> insert into student values (1,'Abin','CSE',90.5,89.5);
+
+1 row created.
+
+SQL> insert into student values (2,'Anand','CSE',75.5,80.5);
+
+1 row created.
+
+SQL> select * from student;
+
+       SID SNAME                DEP      MARK1      MARK2
+---------- -------------------- --- ---------- ----------
+         1 Abin                 CSE       90.5       89.5
+         2 Anand                CSE       75.5       80.5
+
+SQL> insert into student (sid,sname,dept,mark1,mark2) values (3,'Alan','ECE',60,85.5);
+
+1 row created.
+
+SQL> insert into student (sid,sname,dept,mark1,mark2) values (4,'Akhil','AUE',89,90);
+
+1 row created.
+
+SQL> insert into student (sid,sname,dept,mark1,mark2) values (&sid,'&sname','&dept',&mark1,&mark2);
+Enter value for sid: 5
+Enter value for sname: Ajin
+Enter value for dept: ECE
+Enter value for mark1: 67
+Enter value for mark2: 89.5
+old   1: insert into student (sid,sname,dept,mark1,mark2) values (&sid,'&sname','&dept',&mark1,&mark2)
+new   1: insert into student (sid,sname,dept,mark1,mark2) values (5,'Ajin','ECE',67,89.5)
+
+1 row created.
+
+SQL> insert into student (sid,sname,dept,mark1,mark2) values (&sid,'&sname','&dept',&mark1,&mark2);
+Enter value for sid: 6
+Enter value for sname: Aleesha
+Enter value for dept: CSE
+Enter value for mark1: 60.5
+Enter value for mark2: 60.5
+old   1: insert into student (sid,sname,dept,mark1,mark2) values (&sid,'&sname','&dept',&mark1,&mark2)
+new   1: insert into student (sid,sname,dept,mark1,mark2) values (6,'Aleesha','CSE',60.5,60.5)
+
+1 row created.
+
+SQL> select * from student;
+
+       SID SNAME                DEP      MARK1      MARK2
+---------- -------------------- --- ---------- ----------
+         1 Abin                 CSE       90.5       89.5
+         2 Anand                CSE       75.5       80.5
+         3 Alan                 ECE         60       85.5
+         4 Akhil                AUE         89         90
+         5 Ajin                 ECE         67       89.5
+         6 Aleesha              CSE       60.5       60.5
+
+6 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> alter table student add (grade char);
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(38)
+ SNAME                                              VARCHAR2(20)
+ DEPT                                               CHAR(3)
+ MARK1                                              FLOAT(126)
+ MARK2                                              FLOAT(126)
+ GRADE                                              CHAR(1)
+
+
+
+SQL> alter table student rename column grade to CGPA;
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(38)
+ SNAME                                              VARCHAR2(20)
+ DEPT                                               CHAR(3)
+ MARK1                                              FLOAT(126)
+ MARK2                                              FLOAT(126)
+ CGPA                                               CHAR(1)
+
+SQL> alter table student modify (sname char(10));
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(38)
+ SNAME                                              CHAR(10)
+ DEPT                                               CHAR(3)
+ MARK1                                              FLOAT(126)
+ MARK2                                              FLOAT(126)
+ CGPA                                               CHAR(1)
+
+SQL> alter table student drop column mark2;
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(38)
+ SNAME                                              CHAR(10)
+ DEPT                                               CHAR(3)
+ MARK1                                              FLOAT(126)
+ CGPA                                               CHAR(1)
+
+SQL> select * from student;
+
+       SID SNAME      DEP      MARK1 C
+---------- ---------- --- ---------- -
+         1 Abin       CSE       90.5
+         2 Anand      CSE       75.5
+         3 Alan       ECE         60
+         4 Akhil      AUE         89
+         5 Ajin       ECE         67
+         6 Aleesha    CSE       60.5
+
+6 rows selected.
+
+SQL> rename student to student_details;
+
+Table renamed.
+
+SQL> desc student_details;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SID                                                NUMBER(38)
+ SNAME                                              CHAR(10)
+ DEPT                                               CHAR(3)
+ MARK1                                              FLOAT(126)
+ CGPA                                               CHAR(1)
+
+SQL> commit;
+
+Commit complete.
